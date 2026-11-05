@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luna y los Hechizos con Nombre</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf3e0;--card:#fffaf0;--ink:#2b2350;--soft:#6a6288;--line:#e2d4b0;--vio:#6b4cd6;--mint:#1f9d7a;--coral:#d9482a;--gold:#f2b632;--code:#2b2350;--codeink:#f6eecf;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17132e;--card:#241e46;--ink:#f3ecd9;--soft:#b3abd4;--line:#3b3470;--vio:#a78bff;--mint:#4fd1a5;--coral:#ff8a6b;--gold:#f6c453;--code:#0f0c22;--codeink:#f6eecf;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17132e;--card:#241e46;--ink:#f3ecd9;--soft:#b3abd4;--line:#3b3470;--vio:#a78bff;--mint:#4fd1a5;--coral:#ff8a6b;--gold:#f6c453;--code:#0f0c22;--codeink:#f6eecf;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:600;font-size:18px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px 48px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--mint);border-radius:99px;transition:width .5s}
+.stars{font-weight:800;white-space:nowrap}
+.scene{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:20px}
+.story{display:flex;gap:14px;align-items:flex-start}
+.golem{font-size:52px;line-height:1;flex:none;transition:transform .3s}
+.golem.hop{transform:translateY(-10px) rotate(-8deg)}
+h1{font-size:30px;line-height:1.15;margin:0 0 8px;font-weight:800}
+h2{font-size:22px;line-height:1.2;margin:0 0 6px;font-weight:800}
+p{margin:0 0 12px}
+.say{font-size:19px}
+.pre{background:var(--code);color:var(--codeink);border-radius:14px;padding:12px 14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;line-height:1.6;overflow-x:auto;margin:10px 0;white-space:pre}
+.pre b{color:var(--gold)}
+.pre u{text-decoration:none;color:#7fe3c0}
+.lbl{color:var(--soft);font-size:15px;margin:6px 0}
+button{font:inherit;font-weight:800;cursor:pointer;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:14px;padding:10px 14px;min-height:48px}
+button:focus-visible{outline:3px solid var(--vio);outline-offset:2px}
+button:active{transform:translateY(1px)}
+.main{background:var(--vio);border-color:var(--vio);color:#fff;width:100%;margin-top:14px}
+.main[disabled]{opacity:.45;cursor:not-allowed}
+.opts{display:grid;gap:10px;margin-top:10px}
+.opt{text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;font-weight:600;white-space:pre-wrap}
+.opt.ok{background:var(--mint);border-color:var(--mint);color:#08261c}
+.opt.no{background:var(--coral);border-color:var(--coral);color:#2a0c05}
+.bank,.seq{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.seq{min-height:60px;border:2px dashed var(--line);border-radius:14px;padding:8px;flex-direction:column}
+.chip{text-align:left;font-size:16px}
+.chip.used{opacity:.3;pointer-events:none}
+.step{display:flex;gap:8px;align-items:center;background:var(--code);color:var(--codeink);border-radius:10px;padding:8px 12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px}
+.fb{margin-top:12px;padding:12px 14px;border-radius:14px;font-weight:800}
+.fb.good{background:color-mix(in srgb,var(--mint) 25%,transparent);border:2px solid var(--mint)}
+.fb.bad{background:color-mix(in srgb,var(--coral) 22%,transparent);border:2px solid var(--coral)}
+.fb span{font-weight:600;display:block}
+.machine{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0;font-weight:800}
+.box{background:var(--code);color:var(--codeink);border-radius:14px;padding:10px 14px;font-family:ui-monospace,Menlo,Consolas,monospace;min-width:64px;text-align:center}
+.row2{display:flex;gap:10px}
+.row2 button{flex:1}
+.tiny{background:none;border:none;color:var(--soft);text-decoration:underline;min-height:36px;padding:4px 8px}
+.big{font-size:64px;text-align:center;margin:6px 0}
+.lvl{text-align:left;padding:14px 16px;font-size:19px}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:2}
+.wrap{position:relative;z-index:1}
+.scene{animation:inn .45s ease both}
+@keyframes inn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.golem{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.golem.hop{animation:hop .6s}
+@keyframes hop{30%{transform:translateY(-24px) rotate(-10deg) scale(1.18)}60%{transform:translateY(0) rotate(6deg)}}
+.golem.sad{animation:shk .5s}
+@keyframes shk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.opt.no{animation:shk .4s}
+.opt.ok{animation:pop .5s}
+@keyframes pop{50%{transform:scale(1.05)}}
+.step{animation:drop .35s both}
+@keyframes drop{from{opacity:0;transform:translateY(-12px)}}
+.opt.out{opacity:.25;text-decoration:line-through;pointer-events:none}
+.box.run{animation:spin .9s}
+@keyframes spin{0%{transform:none}40%{transform:scale(1.2) rotate(-8deg);box-shadow:0 0 24px var(--gold)}100%{transform:none}}
+.xpr{display:flex;align-items:center;gap:10px;font-size:14px;margin:-4px 0 12px;color:var(--soft)}
+.xpr .bar{height:8px}
+.toast{position:fixed;left:50%;top:76px;transform:translateX(-50%);font-weight:800;color:var(--gold);background:var(--code);padding:4px 14px;border-radius:99px;animation:rise 1.1s both;z-index:5;pointer-events:none}
+@keyframes rise{from{opacity:1}to{opacity:0;transform:translate(-50%,-44px)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="wrap">
+<header><div class="bar"><i id="pb"></i></div><div class="stars" id="st">⭐ 0</div><button class="tiny" id="snd" aria-label="Sonido">🔇</button><button class="tiny" id="mn">Menú</button></header>
+<div class="xpr"><span id="rk"></span><div class="bar"><i id="xb" style="background:var(--gold)"></i></div></div>
+<main id="app" class="scene" aria-live="polite"></main>
+</div>
+<script>
+var normal=[
+{t:'story',g:'🧙‍♀️',h:'Luna y los Hechizos con Nombre',p:'Luna es aprendiz de maga en la Aldea de las Velas. Su amigo Chispa, un golem de arcilla, sabe hacer de todo… pero solo si le das una orden con <b>nombre</b>.<br><br>«Un hechizo con nombre es una <b>función</b>», dice Luna. «Escribes los pasos una vez, ¡y después los llamas cuando quieras!»<br><br>¿Ayudas a Luna a enseñarle a Chispa?',b:'¡Vamos!'},
+
+{t:'order',g:'🍞',h:'Hechizo 1: crear una función',p:'La aldea tiene hambre. Luna escribe el hechizo <b>prepararPan</b>. Toca los pasos en el orden correcto para que Chispa no haga un desastre.',code:'function prepararPan() {\n  ...tus pasos aquí...\n}',steps:['mezclar harina y agua','amasar la masa','hornear el pan','sacar el pan del horno'],ok:'¡Perfecto! Chispa ya sabe prepararPan. Una función es una receta con nombre: escribes los pasos una sola vez.',bad:'Ese orden dejaría el pan crudo. Piensa qué va primero y qué va al final.'},
+
+{t:'choice',g:'📣',h:'Hechizo 2: llamar a la función',p:'Escribir la receta no cocina nada todavía. Chispa necesita que lo <b>llames</b>. ¿Cuál es la forma correcta de pedirle el pan?',opts:['prepararPan()','prepararPan','hacer pan por favor','function prepararPan'],c:0,ok:'¡Eso! Los paréntesis () significan «hazlo ahora». Sin ellos, Chispa solo oye el nombre.',bad:'Casi. Para ejecutar el hechizo hace falta el nombre y los paréntesis ().'},
+
+{t:'machine',g:'🕯️',h:'Hechizo 3: ingredientes (parámetros)',p:'Algunos hechizos necesitan un ingrediente. Esta máquina de velas <b>duplica</b> lo que le des. Luna necesita <b>12</b> velas encendidas. ¿Qué número metes?',code:'function duplicar(velas) {\n  return velas * 2;\n}',rule:function(n){return n*2},target:12,opts:[3,6,12],label:'duplicar',ok:'¡Sí! duplicar(6) devuelve 12. El ingrediente entre paréntesis se llama parámetro: cambia el resultado sin cambiar la receta.',bad:'Prueba con la máquina: lo que entra se multiplica por 2. ¿Qué número doblado da 12?'},
+
+{t:'machine',g:'🌿',h:'Hechizo 4: otra máquina, otro resultado',p:'Esta máquina de hierbas <b>suma 5</b>. Luna necesita <b>9</b> hierbas para la poción. ¿Qué número metes?',code:'function masCinco(hierbas) {\n  return hierbas + 5;\n}',rule:function(n){return n+5},target:9,opts:[4,5,9],label:'masCinco',ok:'¡Bien pensado! masCinco(4) devuelve 9. Resolver problemas es ir hacia atrás: ¿qué entrada da la salida que quiero?',bad:'Piensa al revés: ¿qué número más 5 da 9?'},
+
+{t:'choice',g:'🧺',h:'Hechizo 5: no te repitas',p:'Chispa debe llevar 3 cestas al mercado. Luna tiene dos maneras de escribir el plan. ¿Cuál es mejor?',code:'// Plan A\nrecogerCesta(); caminar(); dejarCesta();\nrecogerCesta(); caminar(); dejarCesta();\nrecogerCesta(); caminar(); dejarCesta();\n\n// Plan B\nfunction llevarCesta() {\n  recogerCesta(); caminar(); dejarCesta();\n}\nllevarCesta(); llevarCesta(); llevarCesta();',opts:['Plan A: es más largo, así que es más seguro','Plan B: la función se escribe una vez y se llama 3 veces','Los dos son exactamente iguales'],c:1,ok:'¡Exacto! Las funciones sirven para reutilizar. Si Luna cambia un paso, solo lo cambia en un lugar.',bad:'Mira otra vez: en el Plan A hay tres copias de lo mismo. Si hay un error, ¡hay que arreglarlo tres veces!'},
+
+{t:'choice',g:'🐛',h:'Hechizo 6: ¡cazar el bicho!',p:'La función <b>triple</b> debería dar el triple de un número, pero Chispa dice «no recibí nada». ¿Qué le falta al hechizo?',code:'function triple(n) {\n  n * 3;\n}',opts:['Falta return: hay que devolver el resultado','Falta otro número 3','Hay que quitar los paréntesis'],c:0,ok:'¡Bicho cazado! return es la forma en que la función entrega su resultado: function triple(n) { return n * 3; }',bad:'La cuenta se hace, pero nadie recibe el resultado. ¿Qué palabra entrega la respuesta?'},
+
+{t:'order',g:'🌧️',h:'Hechizo final: dividir el problema',p:'La aldea necesita lluvia. Un problema grande se resuelve cortándolo en funciones pequeñas. Ordena los pasos de la poción de lluvia.',code:'function pocionDeLluvia() {\n  ...tus llamadas aquí...\n}',steps:['recolectarHierbas()','hervirAgua()','mezclarTodo()','embotellar()'],ok:'¡Llueve en la aldea! Cada función hace una cosa y juntas resuelven algo enorme. Eso es pensar como programadora.',bad:'Chispa se confundió. ¿Qué necesitas tener antes de poder mezclar?'},
+
+{t:'end',h:'¡Luna ya es maga de funciones!',p:'Una función tiene <b>nombre</b>, puede recibir <b>parámetros</b>, <b>devuelve</b> un resultado y se <b>reutiliza</b>. Los problemas grandes se dividen en funciones pequeñas.',r:'function nombre(ingrediente) {\n  // pasos escritos una sola vez\n  return resultado;\n}\n\nnombre(valor);'}
+];
+var medio=[
+{t:'story',g:'🌲',h:'Nivel Medio: el Bosque de Cristal',p:'Luna y Chispa entran al Bosque de Cristal. Aquí los hechizos reciben <b>varios ingredientes</b>, toman decisiones con <b>if</b> y repiten acciones con <b>bucles</b>. ¡Atentos!',b:'Entrar al bosque'},
+{t:'choice',g:'🔮',h:'Dos ingredientes',p:'Este hechizo recibe dos parámetros. ¿Qué devuelve <b>sumar(3, 4)</b>?',code:'function sumar(a, b) {\n  return a + b;\n}',opts:['7','34','12'],c:0,ok:'¡Sí! a vale 3, b vale 4 y la función devuelve 7. Los parámetros se llenan en orden.',bad:'a toma el primer valor, b el segundo, y la función los suma.'},
+{t:'choice',g:'🚪',h:'El portón que decide',p:'El portón solo deja pasar a quien tiene 10 años o más. ¿Qué devuelve <b>puedePasar(9)</b>?',code:'function puedePasar(edad) {\n  if (edad >= 10) {\n    return "sí";\n  } else {\n    return "no";\n  }\n}',opts:['"sí"','"no"','nada'],c:1,ok:'¡Exacto! 9 no es mayor o igual que 10, así que se ejecuta el else.',bad:'Pregúntate: ¿9 >= 10 es verdadero o falso? Eso decide qué camino se sigue.'},
+{t:'choice',g:'🕯️',h:'Un bucle dentro de una función',p:'¿Cuántas velas enciende <b>encender(3)</b>?',code:'function encender(n) {\n  for (let k = 0; k < n; k++) {\n    prenderVela();\n  }\n}',opts:['1','3','4'],c:1,ok:'¡Bien! El bucle repite 3 veces (k = 0, 1, 2) y se detiene cuando k llega a 3.',bad:'El bucle repite mientras k sea menor que n. Cuenta las vueltas: k=0, k=1…'},
+{t:'choice',g:'🧩',h:'Funciones dentro de funciones',p:'Primero se resuelve lo de adentro. ¿Qué devuelve <b>masUno(doble(4))</b>?',code:'function doble(n) { return n * 2; }\nfunction masUno(n) { return n + 1; }',opts:['8','9','10'],c:1,ok:'¡Correcto! doble(4) da 8 y luego masUno(8) da 9.',bad:'Empieza por el paréntesis de adentro: doble(4). Con ese resultado, aplica masUno.'},
+{t:'choice',g:'🐛',h:'Cazar el bicho',p:'Luna llama sumar(2) y recibe NaN («no es un número»). ¿Qué pasó?',code:'function sumar(a, b) {\n  return a + b;\n}\nsumar(2);',opts:['No le dio un segundo número a la función','Sobra el return','sumar necesita un bucle'],c:0,ok:'¡Bicho cazado! b quedó sin valor, y 2 + nada no es un número.',bad:'Mira la llamada sumar(2): la función espera dos ingredientes. ¿Cuántos recibió?'},
+{t:'order',g:'🌊',h:'Cruzar el río',p:'Ordena el plan: primero se mira, luego se decide y al final se llega.',code:'function cruzarRio() {\n  ...tu plan aquí...\n}',steps:['mirar si hay puente','si hay puente: cruzarPuente()','si no: construirBalsa()','llegar a la otra orilla'],ok:'¡Plan perfecto! Mirar, decidir con if/else y llegar: así piensa un programa.',bad:'Primero hay que mirar; las decisiones van antes de llegar.'},
+{t:'end',h:'¡Maga del Bosque de Cristal!',p:'Ya sabes usar varios parámetros, decidir con if, repetir con for y combinar funciones.',r:'function nombre(a, b) {\n  if (a > b) { return a; }\n  for (let k = 0; k < b; k++) { hacer(); }\n  return b;\n}'}
+];
+var dificil=[
+{t:'story',g:'🐉',h:'Nivel Difícil: la Torre de los Datos',p:'En lo alto de la torre, un dragón guarda los secretos de la magia. Para pasar, Luna debe <b>seguir el código paso a paso</b>, usar <b>listas</b>, arreglar errores traicioneros y diseñar un <b>algoritmo</b>.',b:'Subir la torre'},
+{t:'choice',g:'🔢',h:'Sigue el código',p:'Anota en un papel cómo cambia <b>total</b> en cada vuelta. ¿Qué devuelve <b>sumaHasta(4)</b>?',code:'function sumaHasta(n) {\n  let total = 0;\n  for (let k = 1; k <= n; k++) {\n    total = total + k;\n  }\n  return total;\n}',opts:['4','10','24'],c:1,ok:'¡Eso! total va 1, 3, 6, 10. Es 1+2+3+4.',bad:'Haz la tabla: k=1 total=1; k=2 total=3; k=3… sigue hasta k=4.'},
+{t:'choice',g:'🧪',h:'Listas de frascos',p:'Las listas empiezan a contar desde <b>0</b>. ¿Qué es <b>frascos[1]</b>?',code:'let frascos = ["rojo", "azul", "verde"];',opts:['"rojo"','"azul"','"verde"'],c:1,ok:'¡Sí! frascos[0] es "rojo", frascos[1] es "azul". Los programadores cuentan desde cero.',bad:'Recuerda: la posición 0 es el primero. ¿Quién está en la posición 1?'},
+{t:'choice',g:'⚖️',h:'Gana el mayor',p:'¿Qué devuelve <b>mayor(3, 8)</b>? Fíjate cuándo se ejecuta cada return.',code:'function mayor(a, b) {\n  if (a > b) {\n    return a;\n  }\n  return b;\n}',opts:['3','8','11'],c:1,ok:'¡Bien! 3 > 8 es falso, así que se salta el if y devuelve b, que es 8.',bad:'¿Es 3 > 8? Si no, el primer return no se ejecuta y la función sigue.'},
+{t:'machine',g:'🔥',h:'La máquina del dragón',p:'Esta máquina eleva al cuadrado y resta 5. El dragón pide <b>20</b>. ¿Qué número metes?',code:'function cuadradoMenos(n) {\n  return n * n - 5;\n}',rule:function(n){return n*n-5},target:20,opts:[4,5,6],label:'cuadradoMenos',ok:'¡Brillante! 5 × 5 = 25 y 25 − 5 = 20.',bad:'Pruébalo: primero n × n, luego restas 5.'},
+{t:'choice',g:'♾️',h:'El bucle que no termina',p:'Este hechizo debería saludar 3 veces, pero el dragón se queda saludando para siempre. ¿Qué le falta dentro del bucle?',code:'let veces = 3;\nwhile (veces > 0) {\n  saludar();\n}',opts:['veces = veces - 1;','veces = 3;','return veces;'],c:0,ok:'¡Bicho cazado! Sin cambiar veces, la condición nunca deja de ser verdadera.',bad:'Para que el bucle termine, algo debe acercar veces a 0 en cada vuelta.'},
+{t:'order',g:'🏔️',h:'Diseña un algoritmo',p:'Encuentra el número mayor de una lista. Ordena los pasos del algoritmo.',code:'function mayorDeLista(lista) {\n  ...tus pasos aquí...\n}',steps:['guardar el primer número como mayor','mirar cada número de la lista','si es más grande, guardarlo como mayor','devolver el mayor'],ok:'¡Algoritmo ganador! Así se busca el máximo en cualquier lista.',bad:'Primero necesitas un mayor inicial; devolver es lo último.'},
+{t:'end',h:'¡Domadora del Dragón de Datos!',p:'Seguiste código, usaste listas, cazaste bucles infinitos y diseñaste un algoritmo. Eso es programar de verdad.',r:'function mayorDeLista(lista) {\n  let mayor = lista[0];\n  for (let x of lista) {\n    if (x > mayor) { mayor = x; }\n  }\n  return mayor;\n}'}
+];
+var scenes=normal,lvl='normal',best={},i=0,stars=0,app=document.getElementById('app'),tries=0;
+var hl=0,lastOut=null,streak=0,xp=0,mute=true,ac,P=[],run=0,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+try{xp=+localStorage.getItem('lunaxp')||0;best=JSON.parse(localStorage.getItem('lunabest')||'{}')}catch(e){}
+var R=[[0,'Aprendiz'],[60,'Hechicera'],[160,'Maga'],[320,'Archimaga']];
+function head(){
+ document.getElementById('st').textContent='⭐ '+stars+(streak>1?'  🔥x'+streak:'');
+ var r=0;R.forEach(function(a,k){if(xp>=a[0])r=k});
+ var lo=R[r][0],hi=R[r+1]?R[r+1][0]:0;
+ document.getElementById('rk').textContent=R[r][1]+' · '+xp+' XP';
+ document.getElementById('xb').style.width=(hi?(xp-lo)/(hi-lo)*100:100)+'%';
+}
+function gain(n){xp+=n;head();try{localStorage.setItem('lunaxp',xp)}catch(e){}toast('+'+n+' XP'+(streak>1?' 🔥x'+streak:''))}
+function toast(t){var d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},1100)}
+function mood(g,c){if(!g)return;g.classList.remove('hop','sad');void g.offsetWidth;g.classList.add(c);setTimeout(function(){g.classList.remove(c)},700)}
+function beep(ok){if(mute)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type=ok?'triangle':'sawtooth';o.frequency.setValueAtTime(ok?660:180,t);o.frequency.setValueAtTime(ok?990:140,t+.12);g.gain.value=.07;o.connect(g);g.connect(ac.destination);o.start();o.stop(t+.25)}catch(e){}}
+var cv=document.getElementById('fx'),cx=cv.getContext('2d');
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener('resize',rs);
+function burst(){if(rm)return;var c=['#f2b632','#4fd1a5','#a78bff','#ff8a6b'];for(var k=0;k<48;k++)P.push({x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*11,vy:-Math.random()*9-2,c:c[k%4],l:70});if(!run){run=1;loop()}}
+function loop(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l--;cx.globalAlpha=Math.max(p.l/70,0);cx.fillStyle=p.c;cx.fillRect(p.x,p.y,7,7);return p.l>0});if(P.length)requestAnimationFrame(loop);else run=0}
+function type(el){if(rm||!el)return;var w=document.createTreeWalker(el,4),n=[],t,k=0,tot=0;while(t=w.nextNode()){n.push([t,t.data]);tot+=t.data.length;t.data=''}var iv=setInterval(function(){k+=3;var r=k;n.forEach(function(p){p[0].data=p[1].slice(0,Math.max(r,0));r-=p[1].length});if(k>=tot)clearInterval(iv)},16)}
+document.getElementById('snd').onclick=function(){mute=!mute;this.textContent=mute?'🔇':'🔊';beep(1)};
+function cut(){var w=document.querySelector('.opt[data-w="1"]:not(.out):not(.no)');if(w){w.classList.add('out');return 1}return 0}
+function render(){
+ app.style.animation='none';void app.offsetWidth;app.style.animation='';
+ if(i<0)return menu();
+ var s=scenes[i];tries=0;hl=0;lastOut=null;
+ document.getElementById('pb').style.width=(i/(scenes.length-1)*100)+'%';
+ head();
+ if(s.t==='story')return story(s);
+ if(s.t==='end')return end();
+ var h='<div class="story"><div class="golem" id="gl">'+s.g+'</div><div><h2>'+s.h+'</h2><p class="say">'+s.p+'</p></div></div>';
+ if(s.code)h+='<div class="pre">'+esc(s.code)+'</div>';
+ if(s.t==='order')h+='<div class="lbl">Tu hechizo:</div><div class="seq" id="seq"></div><div class="lbl">Pasos disponibles:</div><div class="bank" id="bank"></div><div class="row2"><button id="chk">Lanzar hechizo</button><button id="rst">Borrar</button></div>';
+ if(s.t==='choice')h+='<div class="opts" id="opts"></div>';
+ if(s.t==='machine')h+='<div class="machine"><div class="box" id="inb">?</div><span>→</span><div class="box" id="mb">'+s.label+'()</div><span>→</span><div class="box" id="outb">?</div></div><div class="opts" id="opts"></div>';
+ h+='<div id="fb"></div><div id="nx"></div><div style="text-align:center"><button class="tiny" id="hint">Necesito una pista</button></div>';
+ app.innerHTML=h;type(app.querySelector('.say'));
+ document.getElementById('hint').onclick=hint;
+ if(s.t==='order')order(s);else if(s.t==='choice')choice(s);else machine(s);
+}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function story(s){
+ app.innerHTML='<div class="big">'+s.g+'</div><h1>'+s.h+'</h1><p class="say">'+s.p+'</p><button class="main" id="go">'+s.b+'</button>';
+ document.getElementById('go').onclick=next;type(app.querySelector('.say'));
+}
+function fb(ok,msg){
+ var f=document.getElementById('fb');
+ f.innerHTML='<div class="fb '+(ok?'good':'bad')+'">'+(ok?'✨ ¡Correcto!':'Todavía no')+'<span>'+msg+'</span></div>';
+ mood(document.getElementById('gl'),ok?'hop':'sad');
+ if(ok){
+  var bs=Math.max(1,3-tries-Math.ceil(hl/2));stars+=bs;streak=tries?0:streak+1;gain(Math.round(10*bs*(1+Math.min(streak,4)*.25)));burst();beep(1);
+  document.getElementById('nx').innerHTML='<button class="main" id="nb">'+(i===scenes.length-2?'Ver el final':'Siguiente hechizo')+'</button>';
+  document.getElementById('nb').onclick=next;
+  document.getElementById('nb').focus();
+ } else{tries++;streak=0;beep(0);head()}
+}
+function hint(){
+ var s=scenes[i],t,m=s.t==='machine',o=s.t==='order';
+ if(document.getElementById('nb'))return;
+ if(m&&hl>=1&&lastOut===null)t='Haz un intento primero: la máquina te dará información.';
+ else{hl++;
+  if(hl===1)t=o?'Piensa qué tiene que estar listo antes de poder hacer el siguiente paso.':m?'Prueba una opción y compara lo que sale con lo que pide el objetivo.':'Lee el código línea por línea y anota en un papel cómo cambian los valores.';
+  else if(hl===2&&m)t='Tu último intento salió '+lastOut+': '+(lastOut>s.target?'te pasaste, prueba con una entrada menor.':'te faltó, prueba con una entrada mayor.');
+  else if(o)t=hl===2?'Busca el paso que no depende de ningún otro. Ese abre el plan.':'Lo que se produce en un paso se usa en los siguientes, y el último entrega el resultado.';
+  else t=cut()?'Taché una opción que no puede ser. ¡Sigue pensando!':'Vuelve a leer el código con calma, línea por línea.';
+ }
+ var b=document.getElementById('hint');b.textContent='Pista ('+hl+'/3)';if(hl>=3)b.disabled=true;
+ document.getElementById('fb').innerHTML='<div class="fb good">💡<span>'+esc(t)+'</span></div>';
+}
+function choice(s){
+ var o=document.getElementById('opts');
+ s.opts.forEach(function(t,k){
+  var b=document.createElement('button');b.className='opt';b.textContent=t;b.dataset.w=k===s.c?'':1;
+  b.onclick=function(){
+   if(document.getElementById('nb'))return;
+   var ok=k===s.c;b.classList.add(ok?'ok':'no');fb(ok,ok?s.ok:s.bad);
+  };o.appendChild(b);
+ });
+}
+function machine(s){
+ var o=document.getElementById('opts'),busy=0;
+ s.opts.forEach(function(n){
+  var b=document.createElement('button');b.className='opt';b.textContent=s.label+'('+n+')';b.dataset.w=s.rule(n)===s.target?'':1;
+  b.onclick=function(){
+   if(document.getElementById('nb')||busy)return;busy=1;
+   var out=s.rule(n),ok=out===s.target,ob=document.getElementById('outb'),mb=document.getElementById('mb');
+   document.getElementById('inb').textContent=n;ob.textContent='…';mb.classList.remove('run');void mb.offsetWidth;mb.classList.add('run');
+   setTimeout(function(){ob.textContent=out;ob.style.animation='none';void ob.offsetWidth;ob.style.animation='pop .5s';lastOut=out;busy=0;b.classList.add(ok?'ok':'no');fb(ok,ok?s.ok:s.bad+' (Salió '+out+'.)')},900);
+  };o.appendChild(b);
+ });
+}
+function order(s){
+ var bank=document.getElementById('bank'),seq=document.getElementById('seq'),pick=[];
+ var idx=s.steps.map(function(_,k){return k});
+ idx=idx.slice(1).concat(idx.slice(0,1));idx.reverse();
+ function draw(){
+  seq.innerHTML=pick.length?'':'<span class="lbl">Toca los pasos de abajo en orden.</span>';
+  pick.forEach(function(k){var d=document.createElement('div');d.className='step';d.textContent=s.steps[k];seq.appendChild(d)});
+  Array.prototype.forEach.call(bank.children,function(b){b.classList.toggle('used',pick.indexOf(+b.dataset.k)>-1)});
+ }
+ idx.forEach(function(k){
+  var b=document.createElement('button');b.className='chip';b.dataset.k=k;b.textContent=s.steps[k];
+  b.onclick=function(){pick.push(k);draw()};bank.appendChild(b);
+ });
+ document.getElementById('rst').onclick=function(){if(!document.getElementById('nb')){pick=[];draw()}};
+ document.getElementById('chk').onclick=function(){
+  if(document.getElementById('nb'))return;
+  if(pick.length<s.steps.length){fb(false,'Faltan pasos. ¡Usa todos!');return}
+  var ok=pick.every(function(k,n){return k===n});
+  var q=0;while(q<pick.length&&pick[q]===q)q++;fb(ok,ok?s.ok:s.bad+' (Los primeros '+q+' pasos van bien.)');if(!ok){pick=[];draw()}
+ };
+ draw();
+}
+function next(){i++;render();window.scrollTo(0,0)}
+function end(){
+ var s=scenes[i];document.getElementById('pb').style.width='100%';
+ best[lvl]=Math.max(best[lvl]||0,stars);try{localStorage.setItem('lunabest',JSON.stringify(best))}catch(e){}
+ var mx=(scenes.length-2)*3,md=stars>=mx?'🥇 ¡Perfecto!':stars>=mx*.7?'🥈 ¡Muy bien!':'🥉 ¡Buen intento!';burst();
+ app.innerHTML='<div class="big">🏆</div><h1>'+s.h+'</h1><p class="say"><b>'+md+'</b> Conseguiste ⭐ '+stars+' de '+mx+' estrellas.</p><p>'+s.p+'</p><div class="pre">'+esc(s.r)+'</div><div class="row2"><button id="again">Jugar otra vez</button><button class="main" id="hm" style="margin-top:0">Ir al menú</button></div>';
+ document.getElementById('again').onclick=function(){i=0;stars=0;render()};
+ document.getElementById('hm').onclick=function(){i=-1;render()};
+}
+function menu(){
+ var tot=0;for(var k in best)tot+=best[k];
+ document.getElementById('pb').style.width='0';document.getElementById('st').textContent='⭐ '+tot;
+ var L=[['normal','🌱 Normal','Para empezar: funciones, llamadas y parámetros.',normal],['medio','🔥 Medio','Varios parámetros, if y bucles dentro de funciones.',medio],['dificil','🐉 Difícil','Seguir código paso a paso, listas, bugs y algoritmos.',dificil]];
+ app.innerHTML='<div class="big">🧙‍♀️</div><h1>Luna y los Hechizos con Nombre</h1><p class="say">Elige tu dificultad:</p><div class="opts" id="lv"></div>';
+ L.forEach(function(l){var b=document.createElement('button');b.className='lvl';b.innerHTML='<b>'+l[1]+'</b><br><span class="lbl">'+l[2]+(best[l[0]]?' Mejor: ⭐ '+best[l[0]]:'')+'</span>';b.onclick=function(){lvl=l[0];scenes=l[3];i=0;stars=0;render()};document.getElementById('lv').appendChild(b)});
+}
+document.getElementById('mn').onclick=function(){i=-1;render()};
+i=-1;render();
+</script>
+</body>
+</html>
